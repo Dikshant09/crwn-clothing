@@ -1,0 +1,10 @@
+.errorPage{
+    width: 100vw;
+    height: 100vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(error.jpg);
+    display: flex;
+    justify-content: center;
+    background-position: center; 
+}
