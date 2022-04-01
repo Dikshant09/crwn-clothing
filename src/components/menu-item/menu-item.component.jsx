@@ -5,13 +5,19 @@ import './menu-item.styles.scss';
 const MenuItem = ({title, imageUrl, size, linkUrl, match}) =>{
     let navigate = useNavigate();
     return(    
-        <div className={`${size} menu-item`}>
+        <div className={`${size} menu-item`}
+            onClick = {
+                () => { 
+                    if(linkUrl === 'shop/hats'){
+                        navigate("/hats");
+                    }
+                }}>
             <div className="background-image" style={{
             backgroundImage: `url(${imageUrl})`
             }}
-            onClick={() => { (linkUrl == "/hats") ? navigate("/hats") : navigate("/"); }}
+            // onClick={() => { navigate("/hats") }}
             />
-            <div className="content">
+            <div className="content" >
                 <h1 className="title">{title.toUpperCase() }</h1>    
                 <span className="subtitle">Shop Now</span>
             </div>
