@@ -3,7 +3,7 @@ import HomePage from './pages/homepage/homepage.component';
 import { BrowserRouter as Router, Routes, Route, Link, } from "react-router-dom";
 import ErrorPage from './components/ErrorPage/error.component';
 import ShopPage from './pages/shop/shop.component.jsx';
-
+import Header from './components/header/header.component.jsx';
 
 const HatsPage = () => (
   <div>
@@ -15,6 +15,7 @@ const HatsPage = () => (
 function App() {
   return (
     <div>
+      <Header />
       <Routes>
       <Route path="/" element={<HomePage /> } />
       <Route path="/hats" element={<HatsPage /> } />
