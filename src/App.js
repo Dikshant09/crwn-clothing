@@ -7,6 +7,13 @@ import ShopPage from './pages/shop/shop.component.jsx';
 import Header from './components/header/header.component.jsx';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import app, { auth, createUserProfileDocument } from './firebase/firebase.utils';
+// import { doc, onSnapshot } from "firebase/firestore";
+import { getFirestore, doc, onSnapshot, getDoc, setDoc, collection, addDoc, getDocs, query, where} from "firebase/firestore"
+
+
+
+const db = getFirestore(app);
 
 const HatsPage = () => (
   <div>
@@ -15,7 +22,6 @@ const HatsPage = () => (
   </div>
 );
 
-const auth = getAuth();
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -28,10 +34,27 @@ class App extends React.Component{
   unsubscribeFromAuth = null
   
   componentDidMount(){
-    this.unsubscribeFromAuth = onAuthStateChanged(auth, user =>{
-      this.setState({currentUser: user});
-      console.log(user);
-    })
+    this.unsubscribeFromAuth =  onAuthStateChanged( auth, userAuth =>{
+      if(userAuth){
+        createUserProfileDocument(userAuth);
+        
+        const docRef = doc(db, "users", `${userAuth.uid}`);
+
+
+        onSnapshot(docRef, (snapShot) => {
+          this.setState({ 
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          })
+
+          console.log(this.state);
+        });
+      }
+      
+      this.setState({currentUser: userAuth});
+    });
   }
 
   componentWillUnmount(){
@@ -44,7 +67,7 @@ class App extends React.Component{
       <Header currentUser = { this.state.currentUser }/>
       <Routes>
       <Route path="/" element={<HomePage /> } />
-      <Route path="/hats" element={<HatsPage /> } />
+      <Route path="/shop/hats" element={<HatsPage /> } />
       <Route path="/shop" element={<ShopPage /> } />
       <Route path="/signin" element={<SignInAndSignUp /> } />
       <Route path="*" element={<ErrorPage /> } />

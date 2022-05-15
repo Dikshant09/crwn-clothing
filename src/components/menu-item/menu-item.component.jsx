@@ -6,16 +6,19 @@ const MenuItem = ({title, imageUrl, size, linkUrl, match}) =>{
     let navigate = useNavigate();
     return(    
         <div className={`${size} menu-item`}
-            onClick = {
-                () => { 
-                    if(linkUrl === 'shop/hats'){
-                        navigate("/hats");
-                    }
-                }}>
+            // onClick = {
+            //     () => { 
+            //         if(linkUrl === 'shop/hats'){
+            //             navigate("/hats");
+            //         }
+            //     }}
+            
+            onClick={() => { navigate(`${linkUrl}`) }}
+            
+            >
             <div className="background-image" style={{
             backgroundImage: `url(${imageUrl})`
             }}
-            // onClick={() => { navigate("/hats") }}
             />
             <div className="content" >
                 <h1 className="title">{title.toUpperCase() }</h1>    
