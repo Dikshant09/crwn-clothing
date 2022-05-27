@@ -21,6 +21,11 @@ class SignUp extends Component {
     handleSubmit = async (event) => { 
         event.preventDefault();
 
+        if(password.length < 6){
+            alert("Please enter password with at least 6 characters");
+            return ;
+        }
+
         const { displayName, email, password, confirmPassword } = this.state;
         if(password != confirmPassword){
             alert("Password don't match");
